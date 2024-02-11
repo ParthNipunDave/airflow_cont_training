@@ -1,0 +1,17 @@
+steps:
+  # Build the docker images:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build','-t','us-central1-docker.pkg.dev/sublime-state-413617/bike-sharing-auto-training/bike_prediction:$COMMIT_SHA','.']
+
+# Cloning Git
+  - name: 'gcr.io/cloud-builders/git'
+    args: [ 'clone', 'https://github.com/ParthNipunDave/airflow_cont_training.git' ]
+
+
+  # Push the docker image to artifact
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: [ 'cp', 'airflow_cont_training/training.py', 'gs://us-central1-my-composer-86198dd4-bucket/dags' ]
+
+options:
+    logging: CLOUD_LOGGING_ONLY

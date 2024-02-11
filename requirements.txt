@@ -1,0 +1,11 @@
+pickleshare
+scikit-learn
+gunicorn
+pandas
+flask
+pytest
+app
+google-cloud-bigquery==3.17.2
+google==3.0.0
+google-cloud-bigquery-storage==2.24.0
+pandas_gbq
