@@ -6,11 +6,9 @@ default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
     'start_date': datetime.now(),
-    'retries': 1,
-    'retry_delay': timedelta(days=1)
 }
 dag = DAG(
-    'run_python_script',
+    'continous_retraining_ml_model',
     default_args=default_args,
     description='A DAG to Continous training of model',
     schedule_interval=timedelta(days=1),  # Run once a day
@@ -25,7 +23,7 @@ def run_python_script():
 
 # Define the task to run the Python script
 run_script_task = PythonOperator(
-    task_id='Retraining',
+    task_id='Retraining_model',
     python_callable=run_python_script,
     dag=dag,
 )

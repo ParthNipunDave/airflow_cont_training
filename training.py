@@ -37,11 +37,11 @@ def main():
         df.to_gbq(project_id='sublime-state-413617', destination_table=table_id, if_exists='append')
         print('Data Pushed!')
 
-        pickle.dump(rfc, open('gs://us-central1-my-composer-86198dd4-bucket/dags/bike_sharing_model.sav', 'wb'))
+        pickle.dump(rfc, open('bike_sharing_model.sav', 'wb'))
         print('Model Saved!')
         bucket = storage_client.bucket('model-collections')
-        blob = bucket.blob('gs://us-central1-my-composer-86198dd4-bucket/dags/bike_sharing_model.sav')
-        blob.upload_from_filename('gs://us-central1-my-composer-86198dd4-bucket/dags/bike_sharing_model.sav')
+        blob = bucket.blob('bike_sharing_model.sav')
+        blob.upload_from_filename('bike_sharing_model.sav')
         print('Model Pushed!')
     else:
         print("No improvement in model performance!")
