@@ -19,18 +19,18 @@ def main():
     data = pd.read_csv('gs://us-central1-my-composer-86198dd4-bucket/dags/day.csv')
     data.drop(['instant', 'dteday'], axis=1, inplace=True)
 
-    train_x, test_x, train_y, test_y = train_test_split(data[columns], data['cnt'], test_size=.05)
-
+    train_x, test_x, train_y, test_y = train_test_split(data[columns], data['cnt'], test_size=0.1)
+    print('Model Training Started')
     rfc = RandomForestRegressor()
     rfc.fit(train_x, train_y)
     predict = rfc.predict(test_x)
     r2 = r2_score(predict, test_y)
-
+    print('Model Training done....')
     # checking if model is better performer or not
 
     query = """select max(r2_score) as r2_score from sublime-state-413617.model_metrics.bike_sharing_metrics """
-    r2_score = client.query(query).to_dataframe()['r2_score'].max()
-    if r2_score > r2:
+    r2_scores = client.query(query).to_dataframe()['r2_score'].max()
+    if r2_scores > r2:
         df = pd.DataFrame(
             [{'Algo': 'RandomForestRegressor', 'R2_Score': r2,
               'Training_Time': datetime.now().strftime('%Y-%b-%d %H:%M:%S')}])
