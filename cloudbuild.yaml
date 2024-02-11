@@ -12,6 +12,8 @@ steps:
 
   - name: 'gcr.io/cloud-builders/gsutil'
     args: [ 'cp', 'airflow_cont_training/training.py', 'gs://us-central1-my-composer-86198dd4-bucket/dags' ]
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: [ 'cp', 'airflow_cont_training/dag_auto_training_v1.py', 'gs://us-central1-my-composer-86198dd4-bucket/dags' ]
 
 options:
     logging: CLOUD_LOGGING_ONLY
